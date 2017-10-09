@@ -1,0 +1,47 @@
+<div ng-switch on="inConversation">
+  <div ng-switch-default>
+    <h2 class="chat-with-block">You have no active conversations.</h2>
+  </div>
+  <div ng-switch-when="true">
+    <h2 class="chat-with-block">You are now talking with {{ engagedUser.name }}.</h2>
+
+    <div class="row">
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Chat</h3>
+          </div>
+          <div class="panel-body">
+            <ul class="chatbox">
+              <li ng-repeat="msg in messages" class="{{ msg.position }}">
+                <div class="message" ng-if="msg.text">
+                  {{ msg.text }}
+                </div>
+              </li>
+            </ul>
+
+            <div class="input-group">
+              <input type="text" class="form-control chat-input" ng-model="inputBoxMessage" ng-keypress="keyListener($event)" placeholder="Type message">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button">Send</button>
+              </span>
+            </div><!-- /input-group -->
+          </div>
+
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h3 class="panel-title">Sentiment Analysis</h3>
+          </div>
+          <div class="panel-body context-box">
+            <!-- TODO: display sentiment analysis -->
+            Coming soon.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

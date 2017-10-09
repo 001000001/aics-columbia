@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="en" ng-app="aics">
+  <head>
+    <title>AI Customer Service</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <link rel="stylesheet" href="./assets/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="./assets/css/style.css" />
+    <link rel="stylesheet" href="./assets/css/signin.css" />
+    <link rel="stylesheet" href="./assets/css/loaders.min.css" />
+
+    <!-- socket.io -->
+    <script src="/assets/js/socket.io-1.2.0.js"></script>
+
+    <!-- angular -->
+    <script src="./assets/js/angular.min.js"></script>
+
+    <!-- bootstrap -->
+    <script src="./assets/js/ui-bootstrap-tpls-1.3.3.min.js"></script>
+
+    <!-- aics -->
+    <script src="./assets/js/aics/aics.module.js"></script>
+
+    <!-- aics components -->
+    <script src="./assets/js/aics/dashboard/dashboard.component.js"></script>
+
+    <script src="./assets/js/aics/default-page/default-page.component.js"></script>
+    <script src="./assets/js/aics/loading-page/loading-page.component.js"></script>
+
+    <script src="./assets/js/aics/login/login.component.js"></script>
+  </head>
+  <body ng-controller="PagesController as app">
+
+    <!-- Static navbar -->
+    <nav class="navbar navbar-default navbar-static-top center">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">AICS | Agent Dashboard</a>
+          <div class="navbar-brand float-right" ng-if="app.currentPage != 'login'">
+            {{ getProfile().name }} (<a href="#" ng-click="logout()">Logout</a>)
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div class="col-xs-12" ng-switch on="app.currentPage">
+        <div ng-switch-default>
+          <default-page></default-page>
+        </div>
+        <div ng-switch-when="isLoading">
+          <loading-page></loading-page>
+        </div>
+        <div ng-switch-when="login">
+          <login></login>
+        </div>
+        <div ng-switch-when="dashboard">
+          <dashboard></dashboard>
+        </div>
+      </div>
+    </div> <!-- /container -->
+
+    <script src="/assets/js/jquery-1.11.1.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+  </body>
+</html>
