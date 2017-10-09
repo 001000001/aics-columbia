@@ -1,0 +1,249 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "title": "AI Customer Service",
+        "description": "This is the AI Customer Service API layer.",
+        "version": "1.0.0"
+    },
+    "schemes": [
+        "https"
+    ],
+    "basePath": "/v1",
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/context": {
+            "get": {
+                "summary": "Get context for a given userId.",
+                "tags": [
+                    "Context"
+                ],
+                "operationId": "getContextEvents",
+                "produces": [
+                    "application/json"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "An array of context events",
+                        "schema": {
+                            "$ref": "#/definitions/ContextResponse"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/biometrics": {
+            "put": {
+                "summary": "Put biometric data point for a given userId.",
+                "tags": [
+                    "Biometrics"
+                ],
+                "operationId": "putBiometric",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "item",
+                        "description": "the biometric request",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BiometricPutRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "schema": {
+                            "$ref": "#/definitions/Success"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        },
+        "/biometrics/verify": {
+            "post": {
+                "summary": "Verify a biometric against the database for a given userId.",
+                "tags": [
+                    "Biometrics"
+                ],
+                "operationId": "verifyBiometric",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "item",
+                        "description": "the biometric request",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/BiometricVerificationRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success message",
+                        "schema": {
+                            "$ref": "#/definitions/BiometricVerificationResponse"
+                        }
+                    },
+                    "403": {
+                        "description": "Unauthorized",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    },
+                    "500": {
+                        "description": "Unexpected error",
+                        "schema": {
+                            "$ref": "#/definitions/Error"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "BiometricPutRequest": {
+            "type": "object",
+            "properties": {
+                "assetUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "BiometricVerificationRequest": {
+            "type": "object",
+            "properties": {
+                "assetUrl": {
+                    "type": "string"
+                }
+            }
+        },
+        "BiometricVerificationResponse": {
+            "type": "object",
+            "properties": {
+                "tokenId": {
+                    "type": "string"
+                },
+                "expiration": {
+                    "type": "number"
+                }
+            }
+        },
+        "ContextEventAction": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "ContextEventMetadata": {
+            "type": "object",
+            "properties": {
+                "title": {
+                    "type": "string"
+                },
+                "promptText": {
+                    "type": "string"
+                },
+                "actions": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ContextEventAction"
+                    }
+                }
+            }
+        },
+        "ContextEvent": {
+            "type": "object",
+            "properties": {
+                "uuid": {
+                    "type": "string"
+                },
+                "userId": {
+                    "type": "string"
+                },
+                "eventType": {
+                    "type": "string"
+                },
+                "metadata": {
+                    "$ref": "#/definitions/ContextEventMetadata"
+                },
+                "timestamp": {
+                    "type": "string"
+                }
+            }
+        },
+        "ContextResponse": {
+            "type": "object",
+            "properties": {
+                "events": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/ContextEvent"
+                    }
+                },
+                "messages": {
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "Success": {
+            "type": "object",
+            "properties": {
+                "status": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "Error": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer",
+                    "format": "int32"
+                },
+                "message": {
+                    "type": "string"
+                },
+                "fields": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
