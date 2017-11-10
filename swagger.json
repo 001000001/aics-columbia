@@ -47,7 +47,7 @@
                 ],
                 "operationId": "putBiometric",
                 "consumes": [
-                    "application/json"
+                    "image/png"
                 ],
                 "produces": [
                     "application/json"
@@ -87,7 +87,7 @@
                 ],
                 "operationId": "verifyBiometric",
                 "consumes": [
-                    "application/json"
+                    "image/png"
                 ],
                 "produces": [
                     "application/json"
@@ -128,20 +128,12 @@
     },
     "definitions": {
         "BiometricPutRequest": {
-            "type": "object",
-            "properties": {
-                "assetUrl": {
-                    "type": "string"
-                }
-            }
+            "type": "string",
+            "format": "binary"
         },
         "BiometricVerificationRequest": {
-            "type": "object",
-            "properties": {
-                "assetUrl": {
-                    "type": "string"
-                }
-            }
+            "type": "string",
+            "format": "binary"
         },
         "BiometricVerificationResponse": {
             "type": "object",
@@ -209,12 +201,6 @@
                     "type": "array",
                     "items": {
                         "$ref": "#/definitions/ContextEvent"
-                    }
-                },
-                "messages": {
-                    "type": "array",
-                    "items": {
-                        "type": "string"
                     }
                 }
             }
