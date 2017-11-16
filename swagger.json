@@ -40,7 +40,7 @@
             }
         },
         "/biometrics": {
-            "put": {
+            "post": {
                 "summary": "Put biometric data point for a given userId.",
                 "tags": [
                     "Biometrics"
@@ -65,7 +65,7 @@
                 ],
                 "responses": {
                     "200": {
-                        "description": "Success message",
+                        "description": "Success message (status should be 'success')",
                         "schema": {
                             "$ref": "#/definitions/Success"
                         }
